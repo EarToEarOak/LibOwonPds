@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <libpng15/png.h>
-#include <libpng15/pngconf.h>
+#include <png.h>
+#include <pngconf.h>
 #include <setjmp.h>
 #include <stdbool.h>
 #include <stdint.h>
