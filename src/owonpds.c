@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
 	owon_close(&scope);
 
 	fprintf(stdout, libusb_strerror(error_code));
+	fprintf(stdout,"\n");
 
 	return (0);
 }
