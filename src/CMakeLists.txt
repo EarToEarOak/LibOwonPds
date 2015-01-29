@@ -47,4 +47,11 @@ target_link_libraries(owonpds
     libowonpds_static
     ${PNG_LIBRARIES})
 
-set(INSTALL_TARGETS libowonpds_shared libowonpds_static owonpds)
+#
+# Install targets
+#
+install(TARGETS libowonpds_shared libowonpds_static owonpds
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+)

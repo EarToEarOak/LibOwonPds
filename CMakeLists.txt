@@ -77,15 +77,6 @@ if(GIT_FOUND)
 endif()
 
 #
-# Install target
-#
-install(TARGETS ${INSTALL_TARGETS}
-	LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-	ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-	RUNTIME DESTINATION bin
-)
-
-#
 # Compiler
 #
 if(CMAKE_COMPILER_IS_GNUCC)
@@ -99,7 +90,26 @@ if(CMAKE_COMPILER_IS_GNUCC)
   add_definitions(-fvisibility=hidden)
 endif()
 
+
+#
+# udev rules
+#
+if(UNIX)
+    option(UDEV_RULES "Install udev rules" ON)
+    if (UDEV_RULES)
+        #install (
+        #FILES owonpds.rules
+        #DESTINATION "/etc/udev/rules.d"
+        #)
+        message (STATUS "Installing udev rules")
+    else()
+        message (STATUS "Not installing udev rules")
+    endif()
+endif()
+
+#
 # Uninstall target
+#
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
@@ -108,6 +118,8 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+#
 # Print info
+#
 MESSAGE(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 MESSAGE(STATUS "Version: ${VERSION}")
