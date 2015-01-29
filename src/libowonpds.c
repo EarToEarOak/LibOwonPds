@@ -25,7 +25,6 @@
 #include "libowonpds.h"
 
 #include <endian.h>
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -105,6 +104,18 @@ int32_t data_to_int(const unsigned char* from, const int length) {
 	return (le32toh(convert));
 }
 
+// Exponent of 10
+int power10(const int exponent){
+
+	int i;
+	int power = 1;
+
+	for (i = 0; i < exponent; ++i)
+		power *= 10;
+
+	return(power);
+}
+
 // Scale little endian vector data to volts
 void scale_vector(OWON_CHANNEL_T *channel, const unsigned char *data) {
 
@@ -157,7 +168,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 			channel->slow = slow / channel->sample_rate;
 
 			uint32_t attenuation_index = data_to_uint(&current[CH_ATTEN], 4);
-			channel->attenuation = pow(10, attenuation_index);
+			channel->attenuation = power10(attenuation_index);
 
 			uint32_t sensitivity_index = data_to_uint(&current[CH_SENS], 1);
 			double sensitivity = SENSITIVITY[sensitivity_index];
