@@ -87,7 +87,7 @@ void error(const char *message) {
 }
 
 // Convert from little endian
-uint32_t data_to_uint(const unsigned char* from, const int length) {
+uint32_t data_to_uint(const unsigned char* from, const uint length) {
 
 	uint32_t convert = 0;
 	memcpy(&convert, from, length);
@@ -96,7 +96,7 @@ uint32_t data_to_uint(const unsigned char* from, const int length) {
 }
 
 // Convert from little endian
-int32_t data_to_int(const unsigned char* from, const int length) {
+int32_t data_to_int(const unsigned char* from, const uint length) {
 
 	int32_t convert = 0;
 	memcpy(&convert, from, length);
@@ -105,10 +105,10 @@ int32_t data_to_int(const unsigned char* from, const int length) {
 }
 
 // Exponent of 10
-int power10(const int exponent){
+uint32_t power10(const uint32_t exponent){
 
-	int i;
-	int power = 1;
+	uint32_t i;
+	uint32_t power = 1;
 
 	for (i = 0; i < exponent; ++i)
 		power *= 10;
@@ -146,7 +146,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 		scope->type = OWON_CHANNEL;
 
 		unsigned char *current = data + FILE_HEADER_SIZE;
-		int channel_num = 0;
+		unsigned channel_num = 0;
 
 		// Loop over each channel block extracting data
 		OWON_CHANNEL_T *channel;
@@ -200,9 +200,9 @@ void decode_bitmap(OWON_SCOPE_T *scope, unsigned char *data) {
 	scope->bitmap = malloc(scope->file_length);
 	unsigned char *image = data + BITMAP_HEADER_SIZE;
 	if (scope->bitmap) {
-		int i;
-		int pixel_size = sizeof(char) * OWON_BITMAP_PIXEL_SIZE;
-		int row_size = OWON_BITMAP_WIDTH * pixel_size;
+		unsigned i;
+		unsigned pixel_size = sizeof(char) * OWON_BITMAP_PIXEL_SIZE;
+		unsigned row_size = OWON_BITMAP_WIDTH * pixel_size;
 		// Vertical flip
 		for (i = 0; i < OWON_BITMAP_HEIGHT; i++) {
 			memcpy(&scope->bitmap[i * row_size],
@@ -328,7 +328,7 @@ int owon_read(OWON_SCOPE_T *scope) {
 			unsigned char *data = malloc(fileLength);
 			if (data) {
 				errorCode = libusb_bulk_transfer(scope->handle,
-				READ_ENDPOINT, data, fileLength, &transferred,
+				READ_ENDPOINT, data, (int)fileLength, &transferred,
 				TIMEOUT);
 				if (errorCode == LIBUSB_SUCCESS) {
 					scope->file_length = fileLength;
@@ -356,7 +356,7 @@ int owon_read(OWON_SCOPE_T *scope) {
 void owon_free(OWON_SCOPE_T *scope) {
 
 	if (scope) {
-		int i;
+		unsigned i;
 		for (i = 0; i < scope->channelCount; i++) {
 			OWON_CHANNEL_T *channel;
 			channel = &scope->channel[i];

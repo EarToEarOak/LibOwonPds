@@ -69,7 +69,7 @@ int owon_write_vector_csv(const OWON_SCOPE_T *scope, const char* filename,
 	}
 
 	uint32_t max_len = 0;
-	int i;
+	unsigned i;
 	for (i = 0; i < scope->channelCount; i++) {
 		max_len = MAX(max_len, scope->channel[i].samples);
 		fprintf(file, "CH%d Time (s), CH%d Level (V)", i + 1, i + 1);
@@ -78,7 +78,7 @@ int owon_write_vector_csv(const OWON_SCOPE_T *scope, const char* filename,
 	}
 	fprintf(file, "\n");
 
-	int j;
+	unsigned j;
 	for (i = 0; i < max_len; i++) {
 		for (j = 0; j < scope->channelCount; j++) {
 			OWON_CHANNEL_T channel = scope->channel[j];

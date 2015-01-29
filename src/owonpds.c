@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 			fprintf(stdout, "Channel Data\n");
 			fprintf(stdout, "Name        %s\n", scope.name);
 
-			int i;
+			unsigned i;
 			OWON_CHANNEL_T channel;
 			for (i = 0; i < scope.channelCount; i++) {
 				channel = scope.channel[i];
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (argc == 2) {
-		int length = strlen(argv[1]);
+		size_t length = strlen(argv[1]);
 		char *filename = malloc(length + 5);
 		memcpy(filename, argv[1], length);
 		if (scope.type == OWON_CHANNEL) {

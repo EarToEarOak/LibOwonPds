@@ -120,7 +120,7 @@ typedef struct {
 	OWON_TYPE_T type; 									/**< Capture type */
 	uint32_t file_length; 								/**< File length */
 
-	int channelCount; 									/**< Channels captured */
+	unsigned channelCount; 								/**< Channels captured */
 	OWON_CHANNEL_T channel[OWON_MAX_CHANNELS]; 			/**< Channel data */
 	unsigned char *bitmap; 								/**< Bitmap data */
 
