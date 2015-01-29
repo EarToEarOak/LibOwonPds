@@ -44,7 +44,7 @@ set_target_properties(libowonpds_static PROPERTIES
 add_executable(owonpds
     owonpds.c)
 target_link_libraries(owonpds
-    libowonpds_shared
+    libowonpds_static
     ${PNG_LIBRARIES})
 
 set(INSTALL_TARGETS libowonpds_shared libowonpds_static owonpds)
