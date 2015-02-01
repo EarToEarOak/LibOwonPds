@@ -65,14 +65,14 @@ int owon_write_vector_csv(const OWON_SCOPE_T *scope, const char* filename,
 
 	if (verbose) {
 		fprintf(file, "Device, %s\n", scope->name);
-		fprintf(file, "Active Channels, %d\n", scope->channelCount);
+		fprintf(file, "Active Channels, %u\n", scope->channelCount);
 	}
 
 	uint32_t max_len = 0;
 	unsigned i;
 	for (i = 0; i < scope->channelCount; i++) {
 		max_len = MAX(max_len, scope->channel[i].samples);
-		fprintf(file, "CH%d Time (s), CH%d Level (V)", i + 1, i + 1);
+		fprintf(file, "CH%u Time (s), CH%u Level (V)", i + 1, i + 1);
 		if (i < scope->channelCount - 1)
 			fprintf(file, ", ");
 	}
