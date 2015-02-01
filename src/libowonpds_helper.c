@@ -27,7 +27,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <sys/errno.h>
+#include <errno.h>
 
 #include "libowonpds.h"
 

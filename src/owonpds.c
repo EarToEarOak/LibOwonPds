@@ -22,9 +22,11 @@
  *
  */
 
-#include <libusb-1.0/libusb.h>
+#include <libusb.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "libowonpds.h"
 #include "libowonpds_helper.h"
@@ -89,9 +91,6 @@ int main(int argc, char *argv[]) {
 
 	owon_close(&scope);
 
-	fprintf(stdout, libusb_strerror(error_code));
-	fprintf(stdout,"\n");
-
-	return (0);
+	return (error_code);
 }
 

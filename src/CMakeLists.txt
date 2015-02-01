@@ -21,36 +21,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Shared library
-add_library(libowonpds_shared SHARED
-	libowonpds.c
-	libowonpds_helper.c)
-target_link_libraries(libowonpds_shared
-	${USB_LIBRARIES}
-	${PNG_LIBRARIES})
-set_target_properties(libowonpds_shared PROPERTIES
-    OUTPUT_NAME owonpds)
 
-# Static library
-add_library(libowonpds_static STATIC
+if(MSVC)
+    set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /D NDEBUG")
+endif()
+
+# Library
+add_library(libowonpds STATIC
     libowonpds.c
     libowonpds_helper.c)
-target_link_libraries(libowonpds_static
-    ${USB_LIBRARIES})
-set_target_properties(libowonpds_static PROPERTIES
+set_target_properties(libowonpds PROPERTIES
     OUTPUT_NAME owonpds)
 
 # Utility
 add_executable(owonpds
     owonpds.c)
 target_link_libraries(owonpds
-    libowonpds_static
+    libowonpds
+    ${LIBUSB_LIBRARY}
     ${PNG_LIBRARIES})
 
 #
 # Install targets
 #
-install(TARGETS libowonpds_shared libowonpds_static owonpds
+install(TARGETS libowonpds owonpds
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	RUNTIME DESTINATION bin

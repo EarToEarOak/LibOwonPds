@@ -24,12 +24,13 @@
 
 #include "libowonpds.h"
 
-#include <endian.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+
+#include "endian_portable.h"
 
 #define USB_VID 0x5345
 #define USB_PID 0x1234
@@ -82,12 +83,11 @@ static double SENSITIVITY[21] = { 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5,
 
 void error(const char *message) {
 
-	fprintf(stderr, message);
-	fprintf(stderr, "\n");
+	fprintf(stderr, "%s\n", message);
 }
 
 // Convert from little endian
-uint32_t data_to_uint(const unsigned char* from, const uint length) {
+uint32_t data_to_uint(const unsigned char* from, const size_t length) {
 
 	uint32_t convert = 0;
 	memcpy(&convert, from, length);
@@ -96,7 +96,7 @@ uint32_t data_to_uint(const unsigned char* from, const uint length) {
 }
 
 // Convert from little endian
-int32_t data_to_int(const unsigned char* from, const uint length) {
+int32_t data_to_int(const unsigned char* from, const size_t length) {
 
 	int32_t convert = 0;
 	memcpy(&convert, from, length);
@@ -150,7 +150,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 
 		// Loop over each channel block extracting data
 		OWON_CHANNEL_T *channel;
-		while (current - data < scope->file_length) {
+		while ((unsigned)(current - data) < scope->file_length) {
 			uint32_t blockSize;
 			channel = &scope->channel[channel_num];
 

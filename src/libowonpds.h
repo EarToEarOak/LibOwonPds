@@ -25,7 +25,7 @@
 #ifndef LIBOWONPDS_H_
 #define LIBOWONPDS_H_
 
-#include <libusb-1.0/libusb.h>
+#include <libusb.h>
 #include <stdint.h>
 
 /*
@@ -128,7 +128,7 @@ typedef struct {
 	libusb_device_handle *handle; 						/**< libusb handle */
 } OWON_SCOPE_T;
 
-int owon_open(OWON_SCOPE_T *scope, int index);
+int owon_open(OWON_SCOPE_T *scope, const int index);
 int owon_read(OWON_SCOPE_T *scope);
 void owon_free(OWON_SCOPE_T *scope);
 void owon_close(OWON_SCOPE_T *scope);
