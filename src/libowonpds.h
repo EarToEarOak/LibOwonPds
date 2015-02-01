@@ -67,6 +67,10 @@
 #define OWON_BITMAP_DEPTH 8
 #define OWON_BITMAP_PIXEL_SIZE 3
 
+#ifndef VERSION
+#define VERSION "unknown version"
+#endif
+
 /**
  * @file
  * @defgroup 	LibOwonPds
@@ -128,6 +132,7 @@ typedef struct {
 	libusb_device_handle *handle; 						/**< libusb handle */
 } OWON_SCOPE_T;
 
+char *owon_version();
 int owon_open(OWON_SCOPE_T *scope, const int index);
 int owon_read(OWON_SCOPE_T *scope);
 void owon_free(OWON_SCOPE_T *scope);

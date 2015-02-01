@@ -41,9 +41,7 @@ target_link_libraries(owonpds
     ${LIBUSB_LIBRARY}
     ${PNG_LIBRARIES})
 
-#
 # Install targets
-#
 install(TARGETS libowonpds owonpds
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib

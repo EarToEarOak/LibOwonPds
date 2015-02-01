@@ -272,6 +272,17 @@ int open_device(OWON_SCOPE_T *scope, const int index) {
 }
 
 /**
+ * Get the library version string
+ *
+ * @return Null terminated version or "unknown version"
+ *
+ */
+char *owon_version(){
+
+	return (VERSION);
+}
+
+/**
  * Open communications with the scope
  *
  * Must be called before reading the scope

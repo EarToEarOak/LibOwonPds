@@ -34,10 +34,6 @@
 #define EXT_CSV ".csv"
 #define EXT_PNG ".png"
 
-#ifndef VERSION
-#define VERSION ""
-#endif
-
 /**
  * Get data from a scope
  *
@@ -51,7 +47,7 @@ int main(int argc, char *argv[]) {
 	OWON_SCOPE_T scope;
 	int error_code;
 
-	fprintf(stdout, "owonpds utility %s\n\n", VERSION);
+	fprintf(stdout, "owonpds utility (%s)\n\n", owon_version());
 
 	error_code = owon_open(&scope, 0);
 	if (error_code == LIBUSB_SUCCESS) {

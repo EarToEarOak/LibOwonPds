@@ -26,9 +26,7 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 set(THREADS_USE_PTHREADS_WIN32 true)
 
-#
 # Compiler
-#
 if(CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-std=c99)
     add_definitions(-Wall)
@@ -41,14 +39,10 @@ if(CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-fvisibility=hidden)
  endif()
 
-#
 # Project
-#
 project(LibOwonPds C)
 
-#
 # Dependencies
-#
 find_package(Git)
 find_package(LibUSB REQUIRED)
 find_package(PNG REQUIRED)
@@ -57,20 +51,7 @@ if(NOT GIT_FOUND)
     message(STATUS "Git not found - versioning disabled")
 endif()
 
-#
-# Directories
-#
-include_directories(
-    ${LIBUSB_INCLUDE_DIR}
-    ${PNG_PNG_INCLUDE_DIR})
-link_directories(
-    ${LIBUSB_LIBRARY}
-    ${PNG_LIBRARY})
-add_subdirectory(src)
-
-#
 # Version
-#
 if(GIT_FOUND)
     execute_process(
         COMMAND ${GIT_EXECUTABLE} log -1 --format=%h
@@ -81,13 +62,19 @@ if(GIT_FOUND)
     set(LibOwonPds_VERSION_MINOR 0)
     set(LibOwonPds_VERSION_PATCH ${GIT_HASH})
     set(VERSION ${LibOwonPds_VERSION_MAJOR}.${LibOwonPds_VERSION_MINOR}.${LibOwonPds_VERSION_PATCH})
-    add_definitions("-DVERSION=${VERSION}")
+    add_definitions(-DVERSION="${VERSION}")
 endif()
 
+# Directories
+include_directories(
+    ${LIBUSB_INCLUDE_DIR}
+    ${PNG_PNG_INCLUDE_DIR})
+link_directories(
+    ${LIBUSB_LIBRARY}
+    ${PNG_LIBRARY})
+add_subdirectory(src)
 
-#
 # udev rules
-#
 if(UNIX)
     option(UDEV_RULES "Install udev rules" ON)
     if (UDEV_RULES)
@@ -100,9 +87,7 @@ if(UNIX)
     endif()
 endif()
 
-#
 # Uninstall target
-#
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
@@ -111,8 +96,6 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
-#
 # Print info
-#
 MESSAGE(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 MESSAGE(STATUS "Version: ${VERSION}")
