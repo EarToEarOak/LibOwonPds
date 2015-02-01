@@ -79,13 +79,16 @@ int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		size_t length = strlen(argv[1]);
 		char *filename = malloc(length + 5);
-		memcpy(filename, argv[1], length);
-		if (scope.type == OWON_CHANNEL) {
-			memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
-			owon_write_vector_csv(&scope, filename, true);
-		} else {
-			memcpy(&filename[length], EXT_PNG, sizeof(EXT_PNG));
-			owon_write_bitmap_png(&scope, filename);
+		if (filename){
+			memcpy(filename, argv[1], length);
+			if (scope.type == OWON_CHANNEL) {
+				memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
+				owon_write_vector_csv(&scope, filename, true);
+			}
+			else {
+				memcpy(&filename[length], EXT_PNG, sizeof(EXT_PNG));
+				owon_write_bitmap_png(&scope, filename);
+			}
 		}
 	}
 
