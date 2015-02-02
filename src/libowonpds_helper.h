@@ -40,9 +40,9 @@
 #include "libowonpds.h"
 #include "libowonpds_export.h"
 
-LIBOWONPDS_EXPORT int owon_write_vector_csv(const OWON_SCOPE_T *scope,
+LIBOWONPDS_EXPORT int owon_write_csv(const OWON_SCOPE_T *scope,
 		const char* filename, const bool verbose);
-LIBOWONPDS_EXPORT int owon_write_bitmap_png(const OWON_SCOPE_T *scope,
+LIBOWONPDS_EXPORT int owon_write_png(const OWON_SCOPE_T *scope,
 		const char* filename);
 
 #endif /* LIBOWONPDS_HELPER_H_ */

@@ -46,9 +46,14 @@ project(LibOwonPds C)
 find_package(Git)
 find_package(LibUSB REQUIRED)
 find_package(PNG REQUIRED)
+find_package(PythonLibs)
 
 if(NOT GIT_FOUND)
     message(STATUS "Git not found - versioning disabled")
+endif()
+
+if(NOT PYTHONLIBS_FOUND)
+    message(STATUS "Python not found - support disabled")
 endif()
 
 # Version
@@ -65,19 +70,10 @@ if(GIT_FOUND)
     add_definitions(-DVERSION="${VERSION}")
 endif()
 
-# Directories
-include_directories(
-    ${LIBUSB_INCLUDE_DIR}
-    ${PNG_PNG_INCLUDE_DIR})
-link_directories(
-    ${LIBUSB_LIBRARY}
-    ${PNG_LIBRARY})
-add_subdirectory(src)
-
 # udev rules
 if(UNIX)
-    option(UDEV_RULES "Install udev rules" ON)
-    if (UDEV_RULES)
+    option(INSTALL_UDEV "Install udev rules" ON)
+    if (INSTALL_UDEV)
         install (
             FILES owonpds.rules
             DESTINATION "/etc/udev/rules.d")
@@ -86,6 +82,22 @@ if(UNIX)
         message (STATUS "Not installing udev rules")
     endif()
 endif()
+
+# Python
+if(PYTHONLIBS_FOUND)
+    option(INSTALL_PYTHON "Python support" ON)
+endif()
+
+# Directories
+include_directories(
+    ${LIBUSB_INCLUDE_DIR}
+    ${PNG_PNG_INCLUDE_DIR})
+link_directories(
+    ${LIBUSB_LIBRARY}
+    ${PNG_LIBRARY})
+add_subdirectory(src)
+add_subdirectory(src/python)
+
 
 # Uninstall target
 configure_file(

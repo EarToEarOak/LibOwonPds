@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 
 			unsigned i;
 			OWON_CHANNEL_T channel;
-			for (i = 0; i < scope.channelCount; i++) {
+			for (i = 0; i < scope.channel_count; i++) {
 				channel = scope.channel[i];
 				fprintf(stdout, "  Channel     %s\n", channel.name);
 				fprintf(stdout, "    Timebase    %.9fs\n", channel.timebase);
@@ -79,11 +79,11 @@ int main(int argc, char *argv[]) {
 			memcpy(filename, argv[1], length);
 			if (scope.type == OWON_CHANNEL) {
 				memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
-				owon_write_vector_csv(&scope, filename, true);
+				owon_write_csv(&scope, filename, true);
 			}
 			else {
 				memcpy(&filename[length], EXT_PNG, sizeof(EXT_PNG));
-				owon_write_bitmap_png(&scope, filename);
+				owon_write_png(&scope, filename);
 			}
 		}
 	}

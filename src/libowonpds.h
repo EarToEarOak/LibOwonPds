@@ -67,7 +67,7 @@
 #define OWON_BITMAP_WIDTH 640
 #define OWON_BITMAP_HEIGHT 480
 #define OWON_BITMAP_DEPTH 8
-#define OWON_BITMAP_PIXEL_SIZE 3
+#define OWON_BITMAP_CHANNELS 3
 
 #ifndef VERSION
 #define VERSION "unknown version"
@@ -126,8 +126,11 @@ typedef struct {
 	OWON_TYPE_T type; 									/**< Capture type */
 	uint32_t file_length; 								/**< File length */
 
-	unsigned channelCount; 								/**< Channels captured */
+	unsigned channel_count; 							/**< Channels captured */
 	OWON_CHANNEL_T channel[OWON_MAX_CHANNELS]; 			/**< Channel data */
+	unsigned bitmap_width;								/**< Bitmap width */
+	unsigned bitmap_height;								/**< Bitmap height */
+	unsigned bitmap_channels;							/**< Bitmap colour channels */
 	unsigned char *bitmap; 								/**< Bitmap data */
 
 	libusb_context *context; 							/**< libusb context */
@@ -135,7 +138,7 @@ typedef struct {
 } OWON_SCOPE_T;
 
 LIBOWONPDS_EXPORT char *owon_version();
-LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const int index);
+LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const unsigned index);
 LIBOWONPDS_EXPORT int owon_read(OWON_SCOPE_T *scope);
 LIBOWONPDS_EXPORT void owon_free(OWON_SCOPE_T *scope);
 LIBOWONPDS_EXPORT void owon_close(OWON_SCOPE_T *scope);

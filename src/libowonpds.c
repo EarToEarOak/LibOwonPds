@@ -188,7 +188,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 			else
 				break;
 		}
-		scope->channelCount = channel_num;
+		scope->channel_count = channel_num;
 	} else
 		error("Unknown vector type");
 }
@@ -201,13 +201,16 @@ void decode_bitmap(OWON_SCOPE_T *scope, unsigned char *data) {
 	unsigned char *image = data + BITMAP_HEADER_SIZE;
 	if (scope->bitmap) {
 		unsigned i;
-		unsigned pixel_size = sizeof(char) * OWON_BITMAP_PIXEL_SIZE;
+		unsigned pixel_size = sizeof(char) * OWON_BITMAP_CHANNELS;
 		unsigned row_size = OWON_BITMAP_WIDTH * pixel_size;
 		// Vertical flip
 		for (i = 0; i < OWON_BITMAP_HEIGHT; i++) {
 			memcpy(&scope->bitmap[i * row_size],
 					&image[(OWON_BITMAP_HEIGHT - i) * row_size], row_size);
 		}
+		scope->bitmap_width = OWON_BITMAP_WIDTH;
+		scope->bitmap_height = OWON_BITMAP_HEIGHT;
+		scope->bitmap_channels = OWON_BITMAP_CHANNELS;
 	} else
 		error("Failed to allocate bitmap memory");
 }
@@ -226,7 +229,7 @@ bool decode_file(OWON_SCOPE_T *scope, unsigned char *data) {
 }
 
 // Open an Owon USB PDS device
-int open_device(OWON_SCOPE_T *scope, const int index) {
+int open_device(OWON_SCOPE_T *scope, const unsigned index) {
 
 	libusb_device **devices;
 	libusb_device *device = NULL;
@@ -234,7 +237,7 @@ int open_device(OWON_SCOPE_T *scope, const int index) {
 	int error_code = -1;
 	ssize_t total;
 	int i;
-	int count = 0;
+	unsigned count = 0;
 
 	// Get devices
 	total = libusb_get_device_list(scope->context, &devices);
@@ -292,7 +295,7 @@ LIBOWONPDS_EXPORT char *owon_version(){
  * @return 0 Success,  <0 libusb error
  *
  */
-LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const int index) {
+LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const unsigned index) {
 
 	int errorCode;
 
@@ -368,7 +371,7 @@ LIBOWONPDS_EXPORT void owon_free(OWON_SCOPE_T *scope) {
 
 	if (scope) {
 		unsigned i;
-		for (i = 0; i < scope->channelCount; i++) {
+		for (i = 0; i < scope->channel_count; i++) {
 			OWON_CHANNEL_T *channel;
 			channel = &scope->channel[i];
 			if (channel->vector) {
@@ -376,7 +379,7 @@ LIBOWONPDS_EXPORT void owon_free(OWON_SCOPE_T *scope) {
 				channel->vector = NULL;
 			}
 		}
-		scope->channelCount = 0;
+		scope->channel_count = 0;
 		if (scope->bitmap)
 			free(scope->bitmap);
 	}
