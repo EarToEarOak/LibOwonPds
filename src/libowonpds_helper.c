@@ -50,8 +50,8 @@ void png_close(png_structp *png, FILE *file) {
  * @return 0 Success, >0 OWON_ERROR error, <0 errno error
  *
  */
-int owon_write_vector_csv(const OWON_SCOPE_T *scope, const char* filename,
-		const bool verbose) {
+LIBOWONPDS_EXPORT int owon_write_vector_csv(const OWON_SCOPE_T *scope,
+		const char* filename, const bool verbose) {
 
 	if (scope->type != OWON_CHANNEL)
 		return (OWON_ERROR_FORMAT);
@@ -106,7 +106,8 @@ int owon_write_vector_csv(const OWON_SCOPE_T *scope, const char* filename,
  * @return 0 Success, >0 OWON_ERROR error, <0 errno error
  *
  */
-int owon_write_bitmap_png(const OWON_SCOPE_T *scope, const char* filename) {
+LIBOWONPDS_EXPORT int owon_write_bitmap_png(const OWON_SCOPE_T *scope,
+		const char* filename) {
 
 	if (scope->type != OWON_BITMAP)
 		return (OWON_ERROR_FORMAT);

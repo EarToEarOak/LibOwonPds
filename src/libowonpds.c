@@ -277,7 +277,7 @@ int open_device(OWON_SCOPE_T *scope, const int index) {
  * @return Null terminated version or "unknown version"
  *
  */
-char *owon_version(){
+LIBOWONPDS_EXPORT char *owon_version(){
 
 	return (VERSION);
 }
@@ -292,7 +292,7 @@ char *owon_version(){
  * @return 0 Success,  <0 libusb error
  *
  */
-int owon_open(OWON_SCOPE_T *scope, const int index) {
+LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const int index) {
 
 	int errorCode;
 
@@ -313,7 +313,7 @@ int owon_open(OWON_SCOPE_T *scope, const int index) {
  * @return 0 Success,  <0 libusb error
  *
  */
-int owon_read(OWON_SCOPE_T *scope) {
+LIBOWONPDS_EXPORT int owon_read(OWON_SCOPE_T *scope) {
 
 	int errorCode = LIBUSB_SUCCESS;
 	int transferred = 0;
@@ -364,7 +364,7 @@ int owon_read(OWON_SCOPE_T *scope) {
  * @param scope Scope struct to free captured data memory from
  *
  */
-void owon_free(OWON_SCOPE_T *scope) {
+LIBOWONPDS_EXPORT void owon_free(OWON_SCOPE_T *scope) {
 
 	if (scope) {
 		unsigned i;
@@ -388,7 +388,7 @@ void owon_free(OWON_SCOPE_T *scope) {
  * @param scope
  *
  */
-void owon_close(OWON_SCOPE_T *scope) {
+LIBOWONPDS_EXPORT void owon_close(OWON_SCOPE_T *scope) {
 
 	if (scope) {
 		owon_free(scope);

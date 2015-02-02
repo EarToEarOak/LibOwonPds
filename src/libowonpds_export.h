@@ -22,29 +22,14 @@
  *
  */
 
-/**
- * @file
- * @defgroup 	LibOwonPdsHelper
- * @{
- * @brief		Helper functions for LibOwonPds
- * @author		Al Brown
- * @copyright	Copyright &copy; 2015 Al Brown
- *
- */
+#ifndef LIBOWONPDS_EXPORT_H_
+#define LIBOWONPDS_EXPORT_H_
 
-#ifndef LIBOWONPDS_HELPER_H_
-#define LIBOWONPDS_HELPER_H_
+#if defined(_WIN32)
+#define  LIBOWONPDS_EXPORT __declspec(dllexport)
+#else
+#define  LIBOWONPDS_EXPORT
+#endif
 
-#include <stdbool.h>
 
-#include "libowonpds.h"
-#include "libowonpds_export.h"
-
-LIBOWONPDS_EXPORT int owon_write_vector_csv(const OWON_SCOPE_T *scope,
-		const char* filename, const bool verbose);
-LIBOWONPDS_EXPORT int owon_write_bitmap_png(const OWON_SCOPE_T *scope,
-		const char* filename);
-
-#endif /* LIBOWONPDS_HELPER_H_ */
-
-/** @}*/
+#endif /* LIBOWONPDS_EXPORT_H_ */
