@@ -26,23 +26,42 @@ if(MSVC)
     set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /D NDEBUG")
 endif()
 
-# Library
-add_library(libowonpds STATIC
+# Static library
+add_library(libowonpds_static STATIC
     libowonpds.c
     libowonpds_helper.c)
-set_target_properties(libowonpds PROPERTIES
+target_link_libraries(libowonpds_static
+    ${LIBUSB_LIBRARY}
+    ${PNG_LIBRARIES})
+set_target_properties(libowonpds_static PROPERTIES
+    OUTPUT_NAME owonpds)
+
+# Shared library
+add_library(libowonpds_shared SHARED
+    libowonpds.c
+    libowonpds_helper.c)
+target_link_libraries(libowonpds_shared
+    "-Wl,--whole-archive"
+    ${LIBUSB_LIBRARY}
+    ${PNG_LIBRARIES}
+    "-Wl,--no-whole-archive")
+set_target_properties(libowonpds_shared PROPERTIES
     OUTPUT_NAME owonpds)
 
 # Utility
 add_executable(owonpds
     owonpds.c)
 target_link_libraries(owonpds
-    libowonpds
+    libowonpds_static
     ${LIBUSB_LIBRARY}
     ${PNG_LIBRARIES})
 
 # Install targets
-install(TARGETS libowonpds owonpds
+install(
+    TARGETS
+        libowonpds_static
+        libowonpds_shared
+        owonpds
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	RUNTIME DESTINATION bin
