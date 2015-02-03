@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 		error_code = owon_read(&scope);
 
 		if (error_code == LIBUSB_SUCCESS) {
-			if (scope.type == OWON_CHANNEL) {
+			if (scope.type == OWON_VECTOR) {
 				fprintf(stdout, "Channel Data\n");
 				fprintf(stdout, "Name        %s\n", scope.name);
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 		char *filename = malloc(length + 5);
 		if (filename) {
 			memcpy(filename, argv[1], length);
-			if (scope.type == OWON_CHANNEL) {
+			if (scope.type == OWON_VECTOR) {
 				memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
 				owon_write_csv(&scope, filename, true);
 			} else {

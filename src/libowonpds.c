@@ -143,7 +143,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 	// Check if data is matching vector type
 	if (data[SCOPE_TYPE] == 'V' || data[SCOPE_TYPE] == 'W'
 			|| data[SCOPE_TYPE] == 'X') {
-		scope->type = OWON_CHANNEL;
+		scope->type = OWON_VECTOR;
 
 		unsigned char *current = data + FILE_HEADER_SIZE;
 		unsigned channel_num = 0;

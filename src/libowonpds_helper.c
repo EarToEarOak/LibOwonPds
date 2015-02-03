@@ -53,7 +53,7 @@ void png_close(png_structp *png, FILE *file) {
 LIBOWONPDS_EXPORT int owon_write_csv(const OWON_SCOPE_T *scope,
 		const char* filename, const bool verbose) {
 
-	if (scope->type != OWON_CHANNEL)
+	if (scope->type != OWON_VECTOR)
 		return (OWON_ERROR_FORMAT);
 
 	FILE *file;

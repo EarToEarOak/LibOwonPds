@@ -87,18 +87,15 @@
  * Error codes
  *
  */
-typedef enum {
-	OWON_ERROR_FORMAT,	/**< Data was in the wrong format */
-	OWON_ERROR_PNG, 	/**< Error creating PNG file */
-} OWON_ERROR;
+#define OWON_ERROR_FORMAT 1 /**< Data was in the wrong format */
+#define OWON_ERROR_PNG 2  	/**< Error creating PNG file */
+
 
 /**
  * Type of capture
  */
-typedef enum {
-	OWON_CHANNEL,	/**< Vector channel */
-	OWON_BITMAP		/**< Bitmap */
-} OWON_TYPE_T;
+#define OWON_VECTOR 0	/**< Vector channel */
+#define OWON_BITMAP	1	/**< Bitmap */
 
 
 /**
@@ -123,7 +120,7 @@ typedef struct {
 	unsigned char manufacturer[OWON_DESC_NAME_LEN + 1];	/**< Manufacturer */
 	unsigned char product[OWON_DESC_NAME_LEN + 1];		/**< Product */
 	char name[OWON_SCOPE_NAME_LEN + 1];					/**< Name */
-	OWON_TYPE_T type; 									/**< Capture type */
+	unsigned type; 										/**< Capture type */
 	uint32_t file_length; 								/**< File length */
 
 	unsigned channel_count; 							/**< Channels captured */
