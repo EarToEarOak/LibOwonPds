@@ -28,6 +28,12 @@ import copy
 from ctypes import *
 from ctypes.util import find_library
 
+# Defines from of libowonpds.h
+OWON_MAX_CHANNELS = 6
+OWON_DESC_NAME_LEN = 50
+OWON_SCOPE_NAME_LEN = 6
+OWON_CHANNEL_NAME_LEN = 3
+
 
 class OwonPds(object):
     def __init__(self, index=0):
@@ -81,8 +87,8 @@ class OwonPds(object):
         '''
         vector = []
         if self._scope.type == 0 and channel < self._scope.channelCount:
-            size = self._scope.channel[channel].samples
-            vector = copy.copy(self._scope.channel[channel].vector[:size])
+            size = self._scope.channels[channel].samples
+            vector = copy.copy(self._scope.channels[channel].vector[:size])
         return vector
 
     def get_vectors(self):
@@ -96,9 +102,9 @@ class OwonPds(object):
 
 
 class Channel(Structure):
-    _fields_ = [('name', c_char * 4),
-                ('samples', c_ulong),
-                ('timeBase', c_double),
+    _fields_ = [('name', c_char * (OWON_CHANNEL_NAME_LEN + 1)),
+                ('samples', c_uint32),
+                ('timebase', c_double),
                 ('slow', c_double),
                 ('sampleRate', c_double),
                 ('offset', c_double),
@@ -108,13 +114,13 @@ class Channel(Structure):
 
 
 class Scope(Structure):
-    _fields_ = [('manufacturer', c_char * 51),
-                ('product', c_char * 51),
-                ('name', c_char * 7),
-                ('type', c_int),
-                ('fileLength', c_ulong),
+    _fields_ = [('manufacturer', c_char * (OWON_DESC_NAME_LEN + 1)),
+                ('product', c_char * (OWON_DESC_NAME_LEN + 1)),
+                ('name', c_char * (OWON_SCOPE_NAME_LEN + 1)),
+                ('type', c_uint),
+                ('fileLength', c_uint32),
                 ('channelCount', c_uint),
-                ('channel', Channel * 4),
+                ('channels', Channel * (OWON_MAX_CHANNELS + 1)),
                 ('bitmapWidth', c_uint),
                 ('bitmapHeight', c_uint),
                 ('bitmapChannels', c_uint),
@@ -125,6 +131,8 @@ class Scope(Structure):
 
 def libowonpds_load():
     libraries = ['libowonpds.so',
+                 'libowonpds.dll',
+                 'owonpds.so',
                  'owonpds.dll',
                  find_library('libowonpds'),
                  find_library('owonpds')]

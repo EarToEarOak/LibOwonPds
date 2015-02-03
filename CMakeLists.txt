@@ -28,6 +28,7 @@ set(THREADS_USE_PTHREADS_WIN32 true)
 
 # Compiler
 if(CMAKE_COMPILER_IS_GNUCC)
+    add_definitions(-fPIC)
     add_definitions(-std=c99)
     add_definitions(-Wall)
     add_definitions(-Wextra)
