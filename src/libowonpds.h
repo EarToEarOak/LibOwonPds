@@ -58,7 +58,7 @@
  */
 
 // Fixed constants
-#define OWON_MAX_CHANNELS 	4
+#define OWON_MAX_CHANNELS 	6
 
 #define OWON_DESC_NAME_LEN 50
 #define OWON_SCOPE_NAME_LEN 6
@@ -105,7 +105,7 @@ typedef enum {
  * Channel Data
  */
 typedef struct {
-	char name[OWON_CHANNEL_NAME_LEN + 1]; 	/**< Name */
+	char name[OWON_CHANNEL_NAME_LEN + 1];	/**< Name */
 	uint32_t samples;						/**< Number of samples */
 	double timebase; 						/**< Timebase (s) */
 	double slow; 							/**< Most recent time in slow mode (>=100ms timebase) */
@@ -121,8 +121,8 @@ typedef struct {
  */
 typedef struct {
 	unsigned char manufacturer[OWON_DESC_NAME_LEN + 1];	/**< Manufacturer */
-	unsigned char product[OWON_DESC_NAME_LEN + 1]; 		/**< Product */
-	char name[OWON_SCOPE_NAME_LEN + 1]; 				/**< Name */
+	unsigned char product[OWON_DESC_NAME_LEN + 1];		/**< Product */
+	char name[OWON_SCOPE_NAME_LEN + 1];					/**< Name */
 	OWON_TYPE_T type; 									/**< Capture type */
 	uint32_t file_length; 								/**< File length */
 
