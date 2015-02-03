@@ -97,8 +97,6 @@ link_directories(
     ${LIBUSB_LIBRARY}
     ${PNG_LIBRARY})
 add_subdirectory(src)
-add_subdirectory(src/python)
-
 
 # Uninstall target
 configure_file(
