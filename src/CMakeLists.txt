@@ -40,11 +40,17 @@ set_target_properties(libowonpds_static PROPERTIES
 add_library(libowonpds_shared SHARED
     libowonpds.c
     libowonpds_helper.c)
-target_link_libraries(libowonpds_shared
-    "-Wl,--whole-archive"
-    ${LIBUSB_LIBRARY}
-    ${PNG_LIBRARIES}
-    "-Wl,--no-whole-archive")
+if(CMAKE_COMPILER_IS_GNUCC)
+    target_link_libraries(libowonpds_shared
+        "-Wl,--whole-archive"
+        ${LIBUSB_LIBRARY}
+        ${PNG_LIBRARIES}
+        "-Wl,--no-whole-archive")
+else()
+    target_link_libraries(libowonpds_shared
+        ${LIBUSB_LIBRARY}
+        ${PNG_LIBRARIES})
+endif()
 set_target_properties(libowonpds_shared PROPERTIES
     OUTPUT_NAME owonpds)
 
