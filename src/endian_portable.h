@@ -24,7 +24,6 @@
 
 #ifndef ENDIAN_CONVERT_H_
 #define ENDIAN_CONVERT_H_
-#endif
 
 // Linux
 #if defined(__linux__) || defined(__CYGWIN__)
@@ -41,5 +40,6 @@
 #elif defined(_WIN32) || defined(_WIN64)
 #define le16toh(x) (x)
 #define le32toh(x) (x)
+#endif
 
 #endif /* ENDIAN_CONVERT_H_ */
