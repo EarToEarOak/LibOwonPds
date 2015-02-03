@@ -53,35 +53,40 @@ int main(int argc, char *argv[]) {
 	if (error_code == LIBUSB_SUCCESS) {
 		error_code = owon_read(&scope);
 
-		if (scope.type == OWON_CHANNEL) {
-			fprintf(stdout, "Channel Data\n");
-			fprintf(stdout, "Name        %s\n", scope.name);
+		if (error_code == LIBUSB_SUCCESS) {
+			if (scope.type == OWON_CHANNEL) {
+				fprintf(stdout, "Channel Data\n");
+				fprintf(stdout, "Name        %s\n", scope.name);
 
-			unsigned i;
-			OWON_CHANNEL_T channel;
-			for (i = 0; i < scope.channel_count; i++) {
-				channel = scope.channel[i];
-				fprintf(stdout, "  Channel     %s\n", channel.name);
-				fprintf(stdout, "    Timebase    %.9fs\n", channel.timebase);
-				fprintf(stdout, "    Position    %.3fs\n", channel.slow);
-				fprintf(stdout, "    Offset      %.3fv\n", channel.offset);
-				fprintf(stdout, "    Sensitivity %.2fv\n", channel.sensitivity);
-				fprintf(stdout, "    Attenuation %uX\n", channel.attenuation);
-			}
-		} else
-			fprintf(stdout, "Bitmap Data\n");
+				unsigned i;
+				OWON_CHANNEL_T channel;
+				for (i = 0; i < scope.channel_count; i++) {
+					channel = scope.channel[i];
+					fprintf(stdout, "  Channel     %s\n", channel.name);
+					fprintf(stdout, "    Timebase    %.9fs\n",
+							channel.timebase);
+					fprintf(stdout, "    Position    %.3fs\n", channel.slow);
+					fprintf(stdout, "    Offset      %.3fv\n", channel.offset);
+					fprintf(stdout, "    Sensitivity %.2fv\n",
+							channel.sensitivity);
+					fprintf(stdout, "    Attenuation %uX\n",
+							channel.attenuation);
+					fprintf(stdout, "    Samples     %u\n", channel.samples);
+				}
+			} else
+				fprintf(stdout, "Bitmap Data\n");
+		}
 	}
 
 	if (argc == 2) {
 		size_t length = strlen(argv[1]);
 		char *filename = malloc(length + 5);
-		if (filename){
+		if (filename) {
 			memcpy(filename, argv[1], length);
 			if (scope.type == OWON_CHANNEL) {
 				memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
 				owon_write_csv(&scope, filename, true);
-			}
-			else {
+			} else {
 				memcpy(&filename[length], EXT_PNG, sizeof(EXT_PNG));
 				owon_write_png(&scope, filename);
 			}
@@ -89,6 +94,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	owon_close(&scope);
+
+	if (error_code < 0)
+		fprintf(stderr, "USB error\n");
+	else if (error_code > 0)
+		fprintf(stderr, "Driver error\n");
 
 	return (error_code);
 }
