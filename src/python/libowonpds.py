@@ -40,7 +40,7 @@ OWON_CHANNEL_NAME_LEN = 3
 class OwonPds(object):
 
     ## Initialise the scope object
-    # @param param: index=0    Device index
+    # @param param: index    Device index
     # @return Scope object
     def __init__(self, index=0):
 
@@ -157,8 +157,11 @@ def libowonpds_load():
             break
         except:
             pass
-    else:
-        raise ImportError('Could not find LibOwonPds driver')
+
+    try:
+        driver.owon_version
+    except AttributeError:
+        raise ImportError('Could not find the LibOwonPds driver')
 
     return driver
 
