@@ -34,7 +34,7 @@ OWON_DESC_NAME_LEN = 50
 OWON_SCOPE_NAME_LEN = 6
 OWON_CHANNEL_NAME_LEN = 3
 
-## package OwonPds
+## OwonPds
 
 ## Wraps the LibOwonPds driver
 class OwonPds(object):
@@ -85,7 +85,7 @@ class OwonPds(object):
     def get_bitmap(self):
         bitmap = []
         if self._scope.type == 1:
-            size = self._scope.bitmapWidth * self._scope.bitmapHeight * self._scope.bitmapChannels;
+            size = self._scope.bitmapWidth * self._scope.bitmapHeight * self._scope.bitmapChannels
             bitmap = copy.copy(self._scope.bitmap[:size])
         return bitmap
 
@@ -150,15 +150,15 @@ def libowonpds_load():
                  find_library('libowonpds'),
                  find_library('owonpds')]
 
-    driver = None;
+    driver = None
     for library in libraries:
         try:
             driver = cdll.LoadLibrary(library)
-            break;
+            break
         except:
             pass
     else:
-        raise ImportError('Could not find libowonpds')
+        raise ImportError('Could not find LibOwonPds driver')
 
     return driver
 

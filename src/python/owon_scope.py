@@ -73,11 +73,11 @@ class FrameOscilloscope(wx.Frame):
 
     def __on_control(self, event):
         control = event.GetEventObject()
-        if(control == self._controls.buttonStart):
+        if control == self._controls.buttonStart:
             self.__capture_start()
-        elif(control == self._controls.buttonStop):
+        elif control == self._controls.buttonStop:
             self.__capture_stop()
-        elif(control == self._controls.spinRate):
+        elif control == self._controls.spinRate :
             self._refreshPeriod = 1. / self._controls.spinRate.GetValue()
             if self._timer.IsRunning():
                 self._timer.Stop()
@@ -89,7 +89,7 @@ class FrameOscilloscope(wx.Frame):
 
     def __open_scope(self):
         self._scope = libowonpds.OwonPds()
-        if(self._scope.open() != 0):
+        if self._scope.open() != 0:
             wx.MessageBox('No scope found', 'Error', wx.OK | wx.ICON_ERROR)
             self.Destroy()
         else:
@@ -105,7 +105,7 @@ class FrameOscilloscope(wx.Frame):
 
     def __update(self):
         timeStart = time.time()
-        if(self._scope.read() != 0):
+        if self._scope.read() != 0:
             self.__capture_stop()
             wx.MessageBox('Read failed', 'Error', wx.OK | wx.ICON_ERROR)
         else:
@@ -275,21 +275,21 @@ class PanelInfo(wx.Panel):
 
     def update(self, scope=None):
         name = ''
-        type = ''
+        filetype = ''
         channels = ''
 
         if scope is not None:
             data = scope.get_scope()
             name = '{}'.format(data.name)
-            type = 'Unknown'
+            filetype = 'Unknown'
             if data.type == 0:
-                type = 'Vector'
+                filetype = 'Vector'
             elif data.type == 1:
-                type = 'Bitmap'
+                filetype = 'Bitmap'
             channels = '{}'.format(data.channelCount)
 
         self._textName.SetLabel(name)
-        self._textType.SetLabel(type)
+        self._textType.SetLabel(filetype)
         self._textChannels.SetLabel(channels)
 
 
@@ -381,7 +381,7 @@ class PanelChannel(wx.Panel):
 
 
 def format_eng(value):
-    if value ==0:
+    if value == 0:
         return 0
 
     suffixes = 'num_kM'
