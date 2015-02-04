@@ -31,7 +31,7 @@ import libowonpds
 
 class FrameOscilloscope(wx.Frame):
     CHANNEL_COLORS = ['Red', 'Yellow', 'Sky Blue', 'Green']
-    REFRESH_RATE = 10
+    REFRESH_RATE = 7
 
     def __init__(self):
         wx.Frame.__init__(self, None, title='FrameOscilloscope')
