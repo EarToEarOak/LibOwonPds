@@ -29,6 +29,7 @@ import wx
 
 import libowonpds
 
+
 class FrameOscilloscope(wx.Frame):
     CHANNEL_COLORS = ['Red', 'Yellow', 'Sky Blue', 'Green']
     REFRESH_RATE = 7
@@ -77,7 +78,7 @@ class FrameOscilloscope(wx.Frame):
             self.__capture_start()
         elif control == self._controls.buttonStop:
             self.__capture_stop()
-        elif control == self._controls.spinRate :
+        elif control == self._controls.spinRate:
             self._refreshPeriod = 1. / self._controls.spinRate.GetValue()
             if self._timer.IsRunning():
                 self._timer.Stop()
@@ -128,6 +129,7 @@ class PanelCrt(wx.Panel):
     DIV_Y = 8
     DIV_TICKS = 5
     TICK_LEN = 0.4
+
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, size=(320, 256),
                           style=wx.FULL_REPAINT_ON_RESIZE | wx.BORDER_RAISED)
@@ -252,13 +254,16 @@ class PanelInfo(wx.Panel):
 
         textName = wx.StaticText(self, label='Name')
         self._textName = wx.StaticText(self,
-                                       style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                       style=wx.ALIGN_RIGHT |
+                                       wx.ST_NO_AUTORESIZE)
         textType = wx.StaticText(self, label='Type')
         self._textType = wx.StaticText(self,
-                                       style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                       style=wx.ALIGN_RIGHT |
+                                       wx.ST_NO_AUTORESIZE)
         textChannels = wx.StaticText(self, label='Channels')
         self._textChannels = wx.StaticText(self,
-                                           style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                           style=wx.ALIGN_RIGHT |
+                                           wx.ST_NO_AUTORESIZE)
 
         sizer = wx.GridBagSizer(vgap=4, hgap=4)
         sizer.Add(textName, pos=(0, 0))
@@ -299,7 +304,7 @@ class PanelChannels(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         self._channels = []
-        for i in range(libowonpds.OWON_MAX_CHANNELS):
+        for _i in range(libowonpds.OWON_MAX_CHANNELS):
             channel = PanelChannel(self)
             self._channels.append(channel)
             sizer.Add(channel, 0, wx.EXPAND)
@@ -321,25 +326,31 @@ class PanelChannels(wx.Panel):
                 self._channels[i].update(None)
                 self._channels[i].Disable()
 
+
 class PanelChannel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, style=wx.BORDER_RAISED)
 
         textName = wx.StaticText(self, label='Channel')
         self._textName = wx.StaticText(self,
-                                       style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                       style=wx.ALIGN_RIGHT |
+                                       wx.ST_NO_AUTORESIZE)
         textTimebase = wx.StaticText(self, label='Timebase')
         self._textTimebase = wx.StaticText(self,
-                                           style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                           style=wx.ALIGN_RIGHT |
+                                           wx.ST_NO_AUTORESIZE)
         textSens = wx.StaticText(self, label='Sensitivity')
         self._textSens = wx.StaticText(self,
-                                       style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                       style=wx.ALIGN_RIGHT |
+                                       wx.ST_NO_AUTORESIZE)
         textOffset = wx.StaticText(self, label='Offset')
         self._textOffset = wx.StaticText(self,
-                                         style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                         style=wx.ALIGN_RIGHT |
+                                         wx.ST_NO_AUTORESIZE)
         textAtten = wx.StaticText(self, label='Attenuation')
         self._textAtten = wx.StaticText(self,
-                                        style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
+                                        style=wx.ALIGN_RIGHT |
+                                        wx.ST_NO_AUTORESIZE)
 
         sizer = wx.GridBagSizer(vgap=4, hgap=4)
         sizer.Add(textName, pos=(0, 0))
@@ -391,7 +402,7 @@ def format_eng(value):
     valueEng = value / (10 ** engExp)
 
     if engExp >= -9 and engExp <= 6 and engExp != 0:
-        suffix = suffixes[ (engExp + 9) / 3]
+        suffix = suffixes[(engExp + 9) / 3]
     else:
         suffix = ''
 
@@ -402,4 +413,3 @@ if __name__ == '__main__':
     frame = FrameOscilloscope()
     frame.Show()
     app.MainLoop()
-

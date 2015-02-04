@@ -36,6 +36,7 @@ OWON_CHANNEL_NAME_LEN = 3
 
 ## OwonPds
 
+
 ## Wraps the LibOwonPds driver
 class OwonPds(object):
 
@@ -109,6 +110,7 @@ class OwonPds(object):
 
         return vectors
 
+
 ## Channel structure
 # (see @ref OWON_CHANNEL_T)
 class Channel(Structure):
@@ -139,7 +141,6 @@ class Scope(Structure):
                 ('bitmap', POINTER(c_char)),
                 ('_context', c_void_p),
                 ('_handle', c_void_p)]
-
 
 
 def libowonpds_load():
