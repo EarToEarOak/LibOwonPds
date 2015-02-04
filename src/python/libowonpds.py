@@ -34,73 +34,83 @@ OWON_DESC_NAME_LEN = 50
 OWON_SCOPE_NAME_LEN = 6
 OWON_CHANNEL_NAME_LEN = 3
 
+## package OwonPds
 
+## Wraps the LibOwonPds driver
 class OwonPds(object):
+
+    ## Initialise the scope object
+    # @param param: index=0    Device index
+    # @return Scope object
     def __init__(self, index=0):
-        '''Initialise the scope object
-        '''
+
         self._index = index
         self._version = owon_version()
         self._scope = Scope()
 
+    ## Get scope data structure
+    # @return Scope data structure
     def get_scope(self):
-        '''Get scope data structure
-        '''
         return self._scope
 
+    ## Get the library version
+    # @return Version string
     def get_version(self):
-        '''Get the library version
-        '''
         return self._version
 
+    ## Open communication with the scope
+    # @return
+    #            - 0 Success
+    #            - <0 libusb error
     def open(self):
-        '''Open the scope
-        '''
         return owon_open(byref(self._scope), self._index)
 
+    ## Read from the scope
+    # @return
+    #            - 0 Success
+    #            - <0 libusb error
     def read(self):
-        '''Read from the scope
-        '''
         return owon_read(byref(self._scope))
 
+    ## Free allocated channel/bitmap data
     def free(self):
-        ''' Free allocated channel/bitmap data
-        '''
-        return owon_free(byref(self._scope))
+        owon_free(byref(self._scope))
 
+    ## Close scope communication and free memory
     def close(self):
-        '''Close scope communication and free memory
-        '''
         owon_close(byref(self._scope))
 
+    ## Get a copy of bitmap data
+    # @returns Array of successive RGB values
     def get_bitmap(self):
-        '''Get a copy of bitmap data
-        '''
         bitmap = []
         if self._scope.type == 1:
             size = self._scope.bitmapWidth * self._scope.bitmapHeight * self._scope.bitmapChannels;
             bitmap = copy.copy(self._scope.bitmap[:size])
         return bitmap
 
+    ## Get a copy of vector data for a channel
+    # @param channel Channel to retrieve
+    # @returns Array of vectors
     def get_vector(self, channel):
-        '''Get a copy of vector data for a channel
-        '''
+
         vector = []
         if self._scope.type == 0 and channel < self._scope.channelCount:
             size = self._scope.channels[channel].samples
             vector = copy.copy(self._scope.channels[channel].vector[:size])
         return vector
 
+    ## Get a copy of vector data for all channels
+    # @returns 2D array of vectors
     def get_vectors(self):
-        '''Get a copy of vector data for all channels
-        '''
         vectors = []
         for channel in range(self._scope.channelCount):
             vectors.append(self.get_vector(channel))
 
         return vectors
 
-
+## Channel structure
+# (see @ref OWON_CHANNEL_T)
 class Channel(Structure):
     _fields_ = [('name', c_char * (OWON_CHANNEL_NAME_LEN + 1)),
                 ('samples', c_uint32),
@@ -113,6 +123,8 @@ class Channel(Structure):
                 ('vector', POINTER(c_double))]
 
 
+## Scope structure
+# (see @ref OWON_SCOPE_T)
 class Scope(Structure):
     _fields_ = [('manufacturer', c_char * (OWON_DESC_NAME_LEN + 1)),
                 ('product', c_char * (OWON_DESC_NAME_LEN + 1)),
@@ -127,6 +139,7 @@ class Scope(Structure):
                 ('bitmap', POINTER(c_char)),
                 ('_context', c_void_p),
                 ('_handle', c_void_p)]
+
 
 
 def libowonpds_load():

@@ -143,7 +143,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 	// Check if data is matching vector type
 	if (data[SCOPE_TYPE] == 'V' || data[SCOPE_TYPE] == 'W'
 			|| data[SCOPE_TYPE] == 'X') {
-		scope->type = OWON_VECTOR;
+		scope->type = OWON_TYPE_VECTOR;
 
 		unsigned char *current = data + FILE_HEADER_SIZE;
 		unsigned channel_num = 0;
@@ -196,7 +196,7 @@ void decode_channel(OWON_SCOPE_T *scope, unsigned char *data) {
 // Decode bitmap data
 void decode_bitmap(OWON_SCOPE_T *scope, unsigned char *data) {
 
-	scope->type = OWON_BITMAP;
+	scope->type = OWON_TYPE_BITMAP;
 	scope->bitmap = malloc(scope->file_length);
 	unsigned char *image = data + BITMAP_HEADER_SIZE;
 	if (scope->bitmap) {
@@ -292,7 +292,9 @@ LIBOWONPDS_EXPORT char *owon_version(){
  *
  * @param scope		Scope struct to be initialised
  * @param index		Device index
- * @return 0 Success,  <0 libusb error
+ * @return
+ * 				- 0 Success
+ * 				- <0 libusb error
  *
  */
 LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const unsigned index) {
@@ -313,7 +315,9 @@ LIBOWONPDS_EXPORT int owon_open(OWON_SCOPE_T *scope, const unsigned index) {
  * Capture data from the device
  *
  * @param scope 	Initialised scope struct to read data to
- * @return 0 Success,  <0 libusb error
+ * @return
+ * 				- 0 Success
+ * 				- <0 libusb error
  *
  */
 LIBOWONPDS_EXPORT int owon_read(OWON_SCOPE_T *scope) {

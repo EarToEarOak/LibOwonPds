@@ -47,13 +47,16 @@ void png_close(png_structp *png, FILE *file) {
  * @param filename	Filename
  * @param verbose 	Include scope information
  *
- * @return 0 Success, >0 OWON_ERROR error, <0 errno error
+ * @return
+ * 			- 0 Success
+ * 			- >0 OWON_ERROR error
+ * 			- <0 errno error
  *
  */
 LIBOWONPDS_EXPORT int owon_write_csv(const OWON_SCOPE_T *scope,
 		const char* filename, const bool verbose) {
 
-	if (scope->type != OWON_VECTOR)
+	if (scope->type != OWON_TYPE_VECTOR)
 		return (OWON_ERROR_FORMAT);
 
 	FILE *file;
@@ -103,13 +106,16 @@ LIBOWONPDS_EXPORT int owon_write_csv(const OWON_SCOPE_T *scope,
  * @param scope		Scope structure
  * @param filename	Filename
  *
- * @return 0 Success, >0 OWON_ERROR error, <0 errno error
+ * @return
+ * 			- 0 Success
+ * 			- >0 OWON_ERROR error
+ * 			- <0 errno error
  *
  */
 LIBOWONPDS_EXPORT int owon_write_png(const OWON_SCOPE_T *scope,
 		const char* filename) {
 
-	if (scope->type != OWON_BITMAP)
+	if (scope->type != OWON_TYPE_BITMAP)
 		return (OWON_ERROR_FORMAT);
 
 	FILE *file;

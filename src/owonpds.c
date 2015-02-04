@@ -40,6 +40,10 @@
  * Retrieves information from the scope.\n
  * If a filename is given (without an extension) the captured data will
  * be saved to either a CSV or PNG file.
+ *
+ * @return
+ * 				- 0 Success
+ * 				- <0 libusb error
  */
 
 int main(int argc, char *argv[]) {
@@ -54,7 +58,7 @@ int main(int argc, char *argv[]) {
 		error_code = owon_read(&scope);
 
 		if (error_code == LIBUSB_SUCCESS) {
-			if (scope.type == OWON_VECTOR) {
+			if (scope.type == OWON_TYPE_VECTOR) {
 				fprintf(stdout, "Channel Data\n");
 				fprintf(stdout, "Name        %s\n", scope.name);
 
@@ -83,7 +87,7 @@ int main(int argc, char *argv[]) {
 		char *filename = malloc(length + 5);
 		if (filename) {
 			memcpy(filename, argv[1], length);
-			if (scope.type == OWON_VECTOR) {
+			if (scope.type == OWON_TYPE_VECTOR) {
 				memcpy(&filename[length], EXT_CSV, sizeof(EXT_CSV));
 				owon_write_csv(&scope, filename, true);
 			} else {

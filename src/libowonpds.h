@@ -57,18 +57,7 @@
  *
  */
 
-// Fixed constants
-#define OWON_MAX_CHANNELS 	6
-
-#define OWON_DESC_NAME_LEN 50
-#define OWON_SCOPE_NAME_LEN 6
-#define OWON_CHANNEL_NAME_LEN 3
-
-#define OWON_BITMAP_WIDTH 640
-#define OWON_BITMAP_HEIGHT 480
-#define OWON_BITMAP_DEPTH 8
-#define OWON_BITMAP_CHANNELS 3
-
+// Version from CMake
 #ifndef VERSION
 #define VERSION "unknown version"
 #endif
@@ -83,19 +72,27 @@
  *
  */
 
-/**
- * Error codes
- *
- */
+// Fixed constants
+#define OWON_MAX_CHANNELS 	6 	/**< Maximum number of channels */
+
+#define OWON_DESC_NAME_LEN 50	/**< Maximum description length */
+#define OWON_SCOPE_NAME_LEN 6	/**< Maximum scope name length */
+#define OWON_CHANNEL_NAME_LEN 3	/**< Maximum channel name length */
+
+#define OWON_BITMAP_WIDTH 640	/**< Bitmap width */
+#define OWON_BITMAP_HEIGHT 480	/**< Bitmap height */
+#define OWON_BITMAP_DEPTH 8		/**< Bitmap depth (bits) */
+#define OWON_BITMAP_CHANNELS 3	/**< Colour channels */
+
+
+// Error codes
 #define OWON_ERROR_FORMAT 1 /**< Data was in the wrong format */
 #define OWON_ERROR_PNG 2  	/**< Error creating PNG file */
 
 
-/**
- * Type of capture
- */
-#define OWON_VECTOR 0	/**< Vector channel */
-#define OWON_BITMAP	1	/**< Bitmap */
+// Type of capture
+#define OWON_TYPE_VECTOR 0	/**< Vector channel */
+#define OWON_TYPE_BITMAP 1	/**< Bitmap */
 
 
 /**
