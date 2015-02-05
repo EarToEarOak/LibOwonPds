@@ -68,7 +68,7 @@ void main(void){
 ```
 import libowonscope
 
-def main:
+def main():
 	scopeObj = libowonpds.OwonPds()
 	scopeObj.open() # Success if zero
 	scopeObj.read() # Success if zero
