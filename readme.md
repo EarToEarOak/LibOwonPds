@@ -86,7 +86,10 @@ def main():
 
 ## Known Limitations ##
 - Streaming data is not available, the incoming data is not time-stamped.
-- Polling faster than 7Hz causes the oscilloscope to reboot after a while (PDS5022S - W5022S08530496 v4.1) 
+- Polling faster than 7Hz causes the oscilloscope to reboot after a while (PDS5022S - W5022S08530496 v4.1)
+
+## Credits ##
+- Thanks to [Michael Murphy's Linux driver](http://sourceforge.net/projects/owondriver/) for the scope protocols.
 
 ## License ##
 
