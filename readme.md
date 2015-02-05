@@ -24,6 +24,7 @@ Tested on:
 - [CMake 2.8](http://www.cmake.org/)
 - [libusb-1.0](http://www.libusb.org/)
 - [libpng](http://www.libpng.org/pub/png/libpng.html)
+- [Zadig](http://zadig.akeo.ie/) (Windows only)
 - [Python](https://www.python.org/) (Optional)
 - [wxPython](http://www.wxpython.org/) (Optional)
 
@@ -36,6 +37,12 @@ cmake ..
 make
 sudo make install
 ```
+
+**Windows Install**
+
+Either follow the instructions above or download the [binaries](https://github.com/EarToEarOak/LibOwonPds/releases).
+
+Enable access to the scope by running Zadig, select 'LILIPUT S3C2410A SPQ SYSTEM' and click 'Install driver'
 
 ## Usage ##
 
